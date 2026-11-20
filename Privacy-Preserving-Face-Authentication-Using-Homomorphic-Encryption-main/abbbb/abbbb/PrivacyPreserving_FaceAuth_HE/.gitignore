@@ -1,0 +1,116 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+face_auth.db
+
+# Uploads and Outputs
+uploads/*
+!uploads/.gitkeep
+outputs/encrypted_templates/*
+!outputs/encrypted_templates/.gitkeep
+outputs/logs/*
+!outputs/logs/.gitkeep
+outputs/results/*
+!outputs/results/.gitkeep
+
+# Models (large files)
+models/*.h5
+models/*.pb
+models/*.pth
+!models/.gitkeep
+
+# Dataset images (privacy)
+dataset/enrollment_faces/*/*
+!dataset/enrollment_faces/*/.gitkeep
+dataset/auth_faces/*
+!dataset/auth_faces/.gitkeep
+dataset/rejected_faces/*
+!dataset/rejected_faces/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+.env.local
+
+# Test files
+test_*.py
+*_test.py
+tests/__pycache__/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Encryption keys (if any)
+*.key
+*.pem
+
+# Backup files
+*.bak
+*.backup

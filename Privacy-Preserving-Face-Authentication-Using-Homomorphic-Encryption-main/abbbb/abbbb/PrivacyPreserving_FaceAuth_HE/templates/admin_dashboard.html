@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard - FaceAuth{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>Admin Dashboard</h2>
+    <div style="margin-bottom: 20px;">
+      <a href="{{ url_for('admin_users') }}" style="padding: 8px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; margin-right: 10px;">Manage Users</a>
+      <a href="{{ url_for('admin_logs') }}" style="padding: 8px 15px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px;">View Logs</a>
+    </div>
+    <div class="grid">
+      <div class="card"><strong>Total Users</strong><br />{{ stats.get('total_users', 0) }}</div>
+      <div class="card"><strong>Active Users</strong><br />{{ stats.get('active_users', 0) }}</div>
+      <div class="card"><strong>Inactive Users</strong><br />{{ stats.get('inactive_users', 0) }}</div>
+      <div class="card"><strong>Recent Logins</strong><br />{{ stats.get('recent_logins', 0) }}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Recent Authentication Logs</h3>
+    {% if logs %}
+      <table>
+        <thead><tr><th>User</th><th>Status</th><th>Similarity</th><th>Time</th></tr></thead>
+        <tbody>
+          {% for log in logs %}
+            <tr>
+              <td>{{ log.get('username', '-') }}</td>
+              <td>{{ log.get('auth_result', log.get('status', '-')) }}</td>
+              <td>{{ log.get('similarity', '-') }}</td>
+              <td>{{ log.get('created_at', '-') }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No logs available.</p>
+    {% endif %}
+  </div>
+{% endblock %}

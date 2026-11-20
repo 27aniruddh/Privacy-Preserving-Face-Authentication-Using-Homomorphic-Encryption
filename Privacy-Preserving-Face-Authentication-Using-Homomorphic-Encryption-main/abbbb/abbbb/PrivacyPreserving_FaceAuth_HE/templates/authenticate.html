@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Authenticate - FaceAuth{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>Authenticate User</h2>
+    <form method="post" enctype="multipart/form-data">
+      <label for="username">Username (optional)</label>
+      <input id="username" name="username" type="text" />
+      <input id="image_data" name="image_data" type="hidden" />
+
+      <div class="cam-wrap">
+        <video id="camera" class="cam" autoplay playsinline></video>
+        <img id="preview" class="preview" alt="Captured preview" />
+      </div>
+
+      <div class="cam-actions">
+        <button class="btn secondary" type="button" id="startBtn">Start Camera</button>
+        <button class="btn ghost" type="button" id="captureBtn">Capture Photo</button>
+        <button class="btn" type="submit" id="submitBtn" disabled>Authenticate</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const camera = document.getElementById('camera');
+    const preview = document.getElementById('preview');
+    const imageData = document.getElementById('image_data');
+    const startBtn = document.getElementById('startBtn');
+    const captureBtn = document.getElementById('captureBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    let stream;
+
+    async function startCamera() {
+      const constraints = {
+        video: {
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: 'user'
+        },
+        audio: false
+      };
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+      camera.srcObject = stream;
+      console.log('Camera started successfully');
+    }
+
+    function capture() {
+      if (!camera.videoWidth || !camera.videoHeight) {
+        alert('Camera not ready. Please wait a moment and try again.');
+        return;
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = camera.videoWidth;
+      canvas.height = camera.videoHeight;
+      const ctx = canvas.getContext('2d');
+      
+      // Mirror the video for better UX
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(camera, 0, 0, canvas.width, canvas.height);
+      
+      // Use high quality JPEG (0.95 quality)
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+      
+      console.log('Image captured:', dataUrl.length, 'bytes');
+      preview.src = dataUrl;
+      preview.style.display = 'block';
+      imageData.value = dataUrl;
+      submitBtn.disabled = false;
+      
+      // Stop camera after capture to save resources
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+        camera.style.display = 'none';
+      }
+    }
+
+    startBtn.addEventListener('click', async () => {
+      try {
+        await startCamera();
+        startBtn.disabled = true;
+      } catch (e) {
+        alert('Camera access denied or not available. Error: ' + e.message);
+      }
+    });
+
+    captureBtn.addEventListener('click', () => {
+      if (!stream) {
+        alert('Please start the camera first.');
+        return;
+      }
+      capture();
+    });
+  </script>
+{% endblock %}

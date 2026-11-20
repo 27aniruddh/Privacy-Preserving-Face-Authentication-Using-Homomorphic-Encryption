@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Admin Logs - FaceAuth{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>Authentication Logs</h2>
+    {% if logs %}
+      <table>
+        <thead><tr><th>User</th><th>Status</th><th>Similarity</th><th>Time</th></tr></thead>
+        <tbody>
+          {% for log in logs %}
+            <tr>
+              <td>{{ log.get('username', '-') }}</td>
+              <td>{{ log.get('auth_result', log.get('status', '-')) }}</td>
+              <td>{{ log.get('similarity', '-') }}</td>
+              <td>{{ log.get('created_at', '-') }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No logs available.</p>
+    {% endif %}
+  </div>
+{% endblock %}

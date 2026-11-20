@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Admin Users - FaceAuth{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>Manage Users</h2>
+    
+    {% if users %}
+      <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #f0f0f0;">
+            <th style="padding: 10px; text-align: left;">Username</th>
+            <th style="padding: 10px; text-align: left;">Full Name</th>
+            <th style="padding: 10px; text-align: left;">Email</th>
+            <th style="padding: 10px; text-align: left;">Active</th>
+            <th style="padding: 10px; text-align: left;">Templates</th>
+            <th style="padding: 10px; text-align: center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td style="padding: 10px;">{{ user.get('username', '-') }}</td>
+              <td style="padding: 10px;">{{ user.get('full_name', '-') }}</td>
+              <td style="padding: 10px;">{{ user.get('email', '-') }}</td>
+              <td style="padding: 10px;">{% if user.get('is_active') %}✓ Yes{% else %}✗ No{% endif %}</td>
+              <td style="padding: 10px;">{{ user.get('template_count', 0) }}</td>
+              <td style="padding: 10px; text-align: center;">
+                <form method="post" action="{{ url_for('admin_toggle_user', user_id=user.get('user_id')) }}" style="display:inline">
+                  <button class="btn secondary" type="submit" style="padding: 5px 10px; margin: 0 5px;">Toggle</button>
+                </form>
+                <form method="post" action="{{ url_for('admin_delete_user', user_id=user.get('user_id')) }}" style="display:inline" onsubmit="return confirm('Are you sure you want to delete user &quot;{{ user.get('username', '') }}&quot;? This action cannot be undone.');">
+                  <button class="btn danger" type="submit" style="padding: 5px 10px; margin: 0 5px; background-color: #dc3545; color: white;">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p><strong>No users found in the system.</strong></p>
+      <p>Users will appear here after they enroll through the <a href="{{ url_for('enroll') }}">Enroll page</a>.</p>
+    {% endif %}
+  </div>
+  
+  <style>
+    .btn {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn.secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+    .btn.secondary:hover {
+      background-color: #5a6268;
+    }
+    .btn.danger {
+      background-color: #dc3545;
+      color: white;
+    }
+    .btn.danger:hover {
+      background-color: #c82333;
+    }
+  </style>
+{% endblock %}

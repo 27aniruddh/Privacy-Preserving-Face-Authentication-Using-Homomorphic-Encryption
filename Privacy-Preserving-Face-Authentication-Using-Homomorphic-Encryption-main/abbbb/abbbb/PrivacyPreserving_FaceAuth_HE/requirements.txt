@@ -1,0 +1,35 @@
+# Privacy-Preserving Face Authentication System - Dependencies
+
+# Web Framework
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# Deep Learning & Computer Vision
+# Use a TensorFlow version available on this platform
+tensorflow>=2.17.1,<2.21
+opencv-python==4.9.0.80
+# Allow compatible NumPy versions
+numpy>=1.24,<2.0
+
+# Advanced Face Recognition
+deepface>=0.0.79
+Pillow>=10.0.0
+
+# Encryption & Vector Search
+cryptography>=41.0.0
+faiss-cpu>=1.7.4
+
+# Homomorphic Encryption
+# Use a supported TenSEAL version for Python 3.12 on Windows
+tenseal==0.3.16
+
+# Database
+# SQLite is built into Python
+
+# Optional: Enhanced Face Recognition Models
+# keras-facenet==0.3.2  # Uncomment for better face recognition
+
+# Development Tools (optional)
+# pytest==7.4.3
+# black==23.12.1
+# flake8==7.0.0

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Authenticated - FaceAuth{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>Authentication Successful</h2>
+    <p><strong>User:</strong> {{ user_info.get('username', 'Unknown') }}</p>
+    <p><strong>Score:</strong> {{ '%.4f'|format(user_info.get('similarity_score', 0)) }}</p>
+    <a class="btn" href="{{ url_for('index') }}">Back to Home</a>
+  </div>
+{% endblock %}
