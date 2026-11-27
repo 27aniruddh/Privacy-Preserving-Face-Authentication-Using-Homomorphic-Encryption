@@ -13,11 +13,11 @@ numpy>=1.24,<2.0
 
 # Advanced Face Recognition
 deepface>=0.0.79
+tf-keras>=2.20,<2.21
 Pillow>=10.0.0
 
-# Encryption & Vector Search
+# Encryption
 cryptography>=41.0.0
-faiss-cpu>=1.7.4
 
 # Homomorphic Encryption
 # Use a supported TenSEAL version for Python 3.12 on Windows
